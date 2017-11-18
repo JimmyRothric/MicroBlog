@@ -46,9 +46,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		ServletContext account = this.getServletContext();
 		ArrayList<Account> accountList = (ArrayList<Account>)account.getAttribute("accountList");
-		if (accountList == null) {
-			System.out.println("no account");
-		} else {
+		if (accountList != null) {
 			for (Account tmp:accountList) {
 				if (tmp.getUserName().equals(username) && tmp.getPassWord().equals(password)) {
 					HttpSession session = request.getSession(true);
@@ -58,13 +56,11 @@ public class LoginServlet extends HttpServlet {
 					return;
 				} 
 			}
-		}
-//		else {
+		} else {
 			request.setAttribute("loginError", "Wrong username or password.");
 			RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
 			rd.forward(request, response);
-//		}
-		
+		}
 	}
 
 }

@@ -3,6 +3,7 @@ package Demo;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +53,9 @@ public class RegisterServlet extends HttpServlet {
 		String password1 = request.getParameter("password1");
 		for (Account tmp:accountList) {
 			if (tmp.getUserName().equals(username)) {
-				System.out.println("the username has existed.");
+				request.setAttribute("registerError0", "This account has existed.");
+				RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
+				rd.forward(request, response);
 				return;
 			}
 		}
@@ -63,7 +66,11 @@ public class RegisterServlet extends HttpServlet {
 			accountList.add(a);
 			response.sendRedirect("login.jsp");
 			return;
-		} 
+		} else {
+			request.setAttribute("registerError1", "Two input password must be consistent.");
+			RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
+			rd.forward(request, response);
+		}
 	}
 
 }

@@ -2,6 +2,7 @@ package Demo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -42,6 +43,7 @@ public class BlogServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		String SendBtn = request.getParameter("SendBtn");
+//		String LogoffBtn = request.getParameter("LogoffBtn");
 		ServletContext pastMessage = this.getServletContext();
 		ArrayList<Message> messageList = (ArrayList<Message>)pastMessage.getAttribute("messageList");
 		if (messageList == null) {
@@ -50,12 +52,16 @@ public class BlogServlet extends HttpServlet {
 		pastMessage.setAttribute("messageList", messageList);
 		
 		HttpSession session = request.getSession();
-		String content = request.getParameter("message");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
 		String username = (String) session.getAttribute("username");
-		Message sentMessage = new Message("", content, username);
-		messageList.add(sentMessage);
+		if (title != "" || content != "") {
+			Message sentMessage = new Message(title, content, username);
+			sentMessage.setTime();
+			messageList.add(sentMessage);
+		}	
 		if (SendBtn != null) {
-			session.setAttribute("AddBtn", new Boolean(true));
+//			session.setAttribute("SendBtn", new Boolean(true));
 			response.sendRedirect("blog.jsp");
 		}
 	}

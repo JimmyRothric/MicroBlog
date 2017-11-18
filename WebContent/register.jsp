@@ -21,13 +21,27 @@
 		<td>确认密码：</td>
 		<td><input type="password" name="password1"/> </td>
 	</tr>
-	<tr>
-		<td></td>
-		<td align="right">
-		<input type="submit" value="注册  "/></td>
-	</tr>
 </table>
-
+<input type="submit" value="注册 " style="width:252px;height:30px;"/>
 </form>
+
+<%	String registerInfo0 = (String)request.getAttribute("registerError0");
+	String registerInfo1 = (String)request.getAttribute("registerError1");
+	if (registerInfo0 != null) {
+	%>	
+	<script language="javascript">
+		alert("<%=registerInfo0%>");
+	</script>
+<%
+	} else if (registerInfo1 != null){
+%>
+	<script language="javascript">
+		alert("<%=registerInfo1%>");
+	</script>
+<%
+	} else {
+		return;
+	}
+%>
 </body>
 </html>

@@ -1,25 +1,31 @@
 package Demo;
 
+import java.util.Calendar;
+
+import sun.util.resources.cldr.CalendarData;
+
 public class Message {
 	private String title;
 	private String content;
-	private String user;
+	private String userName;
 	private String time;
+	
 	public Message(){}
-	public Message(String title, String content, String user) {
+	public Message(String title, String content, String username) {
 		this.title = title;
 		this.content = content;
-		this.user = user;
+		this.userName = username;
 	}
 	
 	public String printMessage() {
-		return  user + ":\n" + content + "\n";
+		return  userName + ":\n" + content + "\n";
 	}
 	public String getTitle() {
-		if(content.length() > 10){
-			return (String) content.subSequence(0, 10) + "...";
+		String str = content.replace("\t|\r|\n", " ");
+		if(str.length() > 20){
+			return str.subSequence(0, 20) + "...";
 		} else {
-			return (String) content.subSequence(0, 10);
+			return str.subSequence(0, str.length()) + "";
 		}
 	}
 	public void setTitle(String title) {
@@ -31,17 +37,24 @@ public class Message {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getUser() {
-		return user;
+	public String getUserName() {
+		return userName;
 	}
-	public void setUser(String user) {
-		this.user = user;
+	public void setUserName(String user) {
+		this.userName = user;
 	}
-//	public static void main(String[] args) {
-//		Message m = new Message();
-//		m.setContent("it's a new");
-//		System.out.println(m.getTitle());
-//	}
-	
-	
+	public String getTime() {
+		return time;
+	}
+	public void setTime() {
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		int month = c.get(Calendar.MONTH) + 1;
+		int day = c.get(Calendar.DATE);
+		int hour = c.get(Calendar.HOUR_OF_DAY);
+		int minute = c.get(Calendar.MINUTE);
+		int second = c.get(Calendar.SECOND);
+		this.time = hour + ":" + minute + ":" + second + "\t" + year + "-" + month + "-" + day;
+	}
+
 }

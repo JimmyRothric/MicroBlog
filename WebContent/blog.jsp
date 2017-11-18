@@ -18,28 +18,28 @@
 	}
 %>
 <form action="BlogServlet" method="post">
-<div style="float:right">${username}</div>
+
+<div style="float:right">${username}<br/>
+<input type="button" name="LogoffBtn" value="注销 " onclick = "this.form.action='login.jsp';this.form.submit()"/>
+</div>
+
 <table>
 	<tr>
-		<td><textarea name="message" style="height:100px;width:400px"/></textarea></td>
+		<td><textarea name="title" style="height:30px;width:400px"/></textarea></td>
+	</tr>
+	<tr>
+		<td><textarea name="content" style="height:100px;width:400px"/></textarea></td>
 	</tr>
 	<tr>	
 		<td align="right"><input type="submit" name="SendBtn" value="发送 "/></td>
 	</tr>
 </table>
-
-<%
-	Boolean sent = (Boolean)session.getAttribute("SendBtn");
-	if (sent != null && sent.booleanValue()) {
-		session.setAttribute("SendBtn", new Boolean(false));
-	}
-%>
 <%
 	ArrayList<Message> message = (ArrayList<Message>)application.getAttribute("messageList");
 	if (message != null) {
 		for (Message m:message){
-			out.print("<b>" + m.getUser()+ "</b>");
-			out.print("<br/><pre>" + m.getContent() + "</pre><br/>");
+			out.print("<b>" + m.getUserName()+ "</b>\t<small>" + m.getTime() + "</small>");
+			out.print("<br/><big><pre>" + m.getTitle() + "</pre></big><br/>");
 		}
 	} else {
 		return;

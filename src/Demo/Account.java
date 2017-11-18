@@ -6,6 +6,11 @@ public class Account {
 	private Message message;
 	public Account() {}
 	
+	public Account(String name, Message m) {
+		this.userName = name;
+		this.message = m;
+		this.message.setUserName(name);
+	}
 	public boolean isverify () {
 		return true;
 	}
