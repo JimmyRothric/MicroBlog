@@ -3,7 +3,6 @@ package Demo;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,16 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class RegisterServlet
  */
-@WebServlet("/Login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/Register")
+public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public RegisterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,29 +41,29 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
 		ServletContext account = this.getServletContext();
 		ArrayList<Account> accountList = (ArrayList<Account>)account.getAttribute("accountList");
 		if (accountList == null) {
-			System.out.println("no account");
-		} else {
-			for (Account tmp:accountList) {
-				if (tmp.getUserName().equals(username) && tmp.getPassWord().equals(password)) {
-					HttpSession session = request.getSession(true);
-					session.setAttribute("loggedin", Boolean.TRUE);
-					session.setAttribute("username", username);
-					response.sendRedirect("blog.jsp");
-					return;
-				} 
+			accountList = new ArrayList<Account>();
+		}
+		account.setAttribute("accountList", accountList);
+		String username = request.getParameter("username");
+		String password0 = request.getParameter("password0");
+		String password1 = request.getParameter("password1");
+		for (Account tmp:accountList) {
+			if (tmp.getUserName().equals(username)) {
+				System.out.println("the username has existed.");
+				return;
 			}
 		}
-//		else {
-			request.setAttribute("loginError", "Wrong username or password.");
-			RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
-			rd.forward(request, response);
-//		}
-		
+		if (password0.equals(password1)) {
+			Account a = new Account();
+			a.setUserName(username);
+			a.setPassWord(password0);
+			accountList.add(a);
+			response.sendRedirect("login.jsp");
+			return;
+		} 
 	}
 
 }

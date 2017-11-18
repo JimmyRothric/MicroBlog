@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>login</title>
+<title>Login</title>
 </head>
 <body>
 <form action="Login" method="post">
@@ -19,9 +19,22 @@
 	</tr>
 	<tr>
 		<td><input type="reset" value="重置"/></td>
-		<td><input type="submit" value="登录 "/></td>
+		<td align="right">
+		<input type="button" value="注册 " onclick = "this.form.action='register.jsp';this.form.submit()"/>
+		<input type="submit" value="登录 "/></td>
 	</tr>
 </table>
+<%	String errorInfo = (String)request.getAttribute("loginError");
+	if (errorInfo != null) {
+	%>	
+	<script language="javascript">
+		alert("<%=errorInfo%>");
+	</script>
+<%
+	} else {
+		return;
+	}
+%>
 </form>
 </body>
 </html>

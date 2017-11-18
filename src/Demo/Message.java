@@ -13,7 +13,7 @@ public class Message {
 	}
 	
 	public String printMessage() {
-		return  user + ":\n\t" + content + "\n";
+		return  user + ":\n" + content + "\n";
 	}
 	public String getTitle() {
 		if(content.length() > 10){

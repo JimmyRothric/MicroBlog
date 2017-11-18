@@ -19,10 +19,15 @@
 %>
 <form action="BlogServlet" method="post">
 <div style="float:right">${username}</div>
+<table>
+	<tr>
+		<td><textarea name="message" style="height:100px;width:400px"/></textarea></td>
+	</tr>
+	<tr>	
+		<td align="right"><input type="submit" name="SendBtn" value="发送 "/></td>
+	</tr>
+</table>
 
-<input type="text" name="message" style="height:25px;width:400px"/>
-
-<input type="submit" name="SendBtn" value="发送 "/><p>
 <%
 	Boolean sent = (Boolean)session.getAttribute("SendBtn");
 	if (sent != null && sent.booleanValue()) {
@@ -33,7 +38,8 @@
 	ArrayList<Message> message = (ArrayList<Message>)application.getAttribute("messageList");
 	if (message != null) {
 		for (Message m:message){
-			out.print("<pre>" + m.printMessage() + "</pre>");
+			out.print("<b>" + m.getUser()+ "</b>");
+			out.print("<br/><pre>" + m.getContent() + "</pre><br/>");
 		}
 	} else {
 		return;
