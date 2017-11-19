@@ -25,10 +25,10 @@
 
 <table>
 	<tr>
-		<td><textarea name="title" style="height:30px;width:400px"/></textarea></td>
+		<td><textarea name="title" style="height:30px;width:400px;resize:none;"/></textarea></td>
 	</tr>
 	<tr>
-		<td><textarea name="content" style="height:100px;width:400px"/></textarea></td>
+		<td><textarea name="content" style="height:100px;width:400px;resize:none;"/></textarea></td>
 	</tr>
 	<tr>	
 		<td align="right"><input type="submit" name="SendBtn" value="发送 "/></td>
@@ -39,12 +39,16 @@
 	if (message != null) {
 		for (Message m:message){
 			out.print("<b>" + m.getUserName()+ "</b>\t<small>" + m.getTime() + "</small>");
-			out.print("<br/><big><pre>" + m.getTitle() + "</pre></big><br/>");
+			out.print("<br/><pre>" + m.getTitle() + "</pre>");
+%>
+<input type="button" name="checkBtn" value="查看 " onclick = ""/>
+<input type="button" name="delteBtn" value="删除 " onclick = ""/>
+<%
+			out.print("</p>");
 		}
 	} else {
 		return;
 	}
-	
 %>
 
 </form>

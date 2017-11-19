@@ -45,18 +45,26 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		ServletContext account = this.getServletContext();
-		ArrayList<Account> accountList = (ArrayList<Account>)account.getAttribute("accountList");
+		//ArrayList<Account> accountList = (ArrayList<Account>)account.getAttribute("accountList");
+		AccountList accountList = (AccountList)account.getAttribute("accountList");
+		if (accountList == null) {
+			accountList = new AccountList();
+		}
+		Boolean flag = false;
 		if (accountList != null) {
-			for (Account tmp:accountList) {
-				if (tmp.getUserName().equals(username) && tmp.getPassWord().equals(password)) {
-					HttpSession session = request.getSession(true);
-					session.setAttribute("loggedin", Boolean.TRUE);
-					session.setAttribute("username", username);
-					response.sendRedirect("blog.jsp");
-					return;
-				} 
+//			for (Account acc:accountList) {
+//				if (acc.isverify(username, password)) {
+			if (accountList.isverify(username, password)) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("loggedin", Boolean.TRUE);
+				session.setAttribute("username", username);
+				response.sendRedirect("blog.jsp");
+				flag = true;
+				return;
 			}
-		} else {
+		}
+//		} 
+		if (!flag) {
 			request.setAttribute("loginError", "Wrong username or password.");
 			RequestDispatcher rd = request.getRequestDispatcher("/login.jsp");
 			rd.forward(request, response);

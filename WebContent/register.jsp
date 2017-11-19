@@ -8,6 +8,9 @@
 </head>
 <body>
 <form action="Register" method="post">
+<div style="float:right">
+<input type="button" value="返回 " onclick = "this.form.action='login.jsp';this.form.submit()"/>
+</div>
 <table>
 	<tr>
 		<td>用户名：</td>
@@ -25,7 +28,8 @@
 <input type="submit" value="注册 " style="width:252px;height:30px;"/>
 </form>
 
-<%	String registerInfo0 = (String)request.getAttribute("registerError0");
+<%	
+	String registerInfo0 = (String)request.getAttribute("registerError0");
 	String registerInfo1 = (String)request.getAttribute("registerError1");
 	if (registerInfo0 != null) {
 	%>	

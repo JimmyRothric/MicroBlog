@@ -62,6 +62,7 @@ public class BlogServlet extends HttpServlet {
 		}	
 		if (SendBtn != null) {
 //			session.setAttribute("SendBtn", new Boolean(true));
+			
 			response.sendRedirect("blog.jsp");
 		}
 	}

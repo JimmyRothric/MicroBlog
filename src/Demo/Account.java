@@ -5,14 +5,22 @@ public class Account {
 	private String passWord;
 	private Message message;
 	public Account() {}
-	
+	public Account(String name, String password) {
+		this.userName = name;
+		this.passWord = password;
+	}
 	public Account(String name, Message m) {
 		this.userName = name;
 		this.message = m;
 		this.message.setUserName(name);
 	}
-	public boolean isverify () {
-		return true;
+	public boolean verify (String username, String password) {
+		if (userName.equals(username) && passWord.equals(password)) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	}
 	public String getUserName() {
 		return userName;

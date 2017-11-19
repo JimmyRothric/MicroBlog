@@ -17,15 +17,19 @@ public class Message {
 		this.userName = username;
 	}
 	
-	public String printMessage() {
-		return  userName + ":\n" + content + "\n";
+	public void printMessage() {
+		
 	}
 	public String getTitle() {
-		String str = content.replace("\t|\r|\n", " ");
-		if(str.length() > 20){
-			return str.subSequence(0, 20) + "...";
+		if (title == "") {
+			String str = content.replace("\t|\r|\n", " ");
+			if(str.length() > 15){
+				return str.subSequence(0, 15) + "...";
+			} else {
+				return str.subSequence(0, str.length()) + "";
+			}
 		} else {
-			return str.subSequence(0, str.length()) + "";
+			return title;
 		}
 	}
 	public void setTitle(String title) {
@@ -55,6 +59,9 @@ public class Message {
 		int minute = c.get(Calendar.MINUTE);
 		int second = c.get(Calendar.SECOND);
 		this.time = hour + ":" + minute + ":" + second + "\t" + year + "-" + month + "-" + day;
+	}
+	public void delMessage() {
+		
 	}
 
 }

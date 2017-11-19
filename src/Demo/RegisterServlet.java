@@ -43,27 +43,27 @@ public class RegisterServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		ServletContext account = this.getServletContext();
-		ArrayList<Account> accountList = (ArrayList<Account>)account.getAttribute("accountList");
+//		ArrayList<Account> accountList = (ArrayList<Account>)account.getAttribute("accountList");
+		AccountList accountList = (AccountList)account.getAttribute("accountList");
 		if (accountList == null) {
-			accountList = new ArrayList<Account>();
+			accountList = new AccountList();
 		}
 		account.setAttribute("accountList", accountList);
 		String username = request.getParameter("username");
 		String password0 = request.getParameter("password0");
 		String password1 = request.getParameter("password1");
-		for (Account tmp:accountList) {
-			if (tmp.getUserName().equals(username)) {
-				request.setAttribute("registerError0", "This account has existed.");
-				RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
-				rd.forward(request, response);
-				return;
-			}
+//		for (Account acc:accountList) {
+//			if (acc.getUserName().equals(username)) {
+		if (accountList.isexist(username)) {
+			request.setAttribute("registerError0", "This account has existed.");
+			RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
+			rd.forward(request, response);
+			return;
 		}
+//		}
 		if (password0.equals(password1)) {
-			Account a = new Account();
-			a.setUserName(username);
-			a.setPassWord(password0);
-			accountList.add(a);
+			Account a = new Account(username, password0);
+			accountList.addAcc(a);//
 			response.sendRedirect("login.jsp");
 			return;
 		} else {
