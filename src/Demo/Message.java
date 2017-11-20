@@ -16,24 +16,40 @@ public class Message {
 		this.content = content;
 		this.userName = username;
 	}
-	
-	public void printMessage() {
-		
+	public String getMessage() {
+		StringBuffer message = new StringBuffer("");
+		message.append("<big><b>" + userName+ "</b></big>\t<small>" + time + "</small>");
+		message.append("<br/><big>" + title + "</big>");
+		message.append("<br/><pre>" + content + "</pre>");
+		return message.toString();
+	}
+	public String printMessage(Message m, int num) {
+		String checkStr = "checkBtn" + num;
+		String deleteStr = "deleteBtn" + num;
+		StringBuffer message = new StringBuffer("");
+		message.append("<b>" + m.getUserName()+ "</b>\t<small>" + m.getTime() + "</small>");
+		message.append("<br/><pre>" + m.getTitle() + "</pre>");
+		message.append("<input type=\"submit\" name=\"" + checkStr + "\" value=\"查看 \"/>");
+		if (m.getUserName().equals("admin")) {
+			message.append("<input type=\"submit\" name=\"" + deleteStr + "\" value=\"删除 \"/>");
+		}
+		message.append("<br/>");		
+		return message.toString();
 	}
 	public String getTitle() {
+		return title;
+	}
+	public void setTitle() {
 		if (title == "") {
 			String str = content.replace("\t|\r|\n", " ");
 			if(str.length() > 15){
-				return str.subSequence(0, 15) + "...";
+				this.title = str.subSequence(0, 15) + "...";
 			} else {
-				return str.subSequence(0, str.length()) + "";
+				this.title =  str.subSequence(0, str.length()) + "";
 			}
 		} else {
-			return title;
+			return;
 		}
-	}
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	public String getContent() {
 		return content;

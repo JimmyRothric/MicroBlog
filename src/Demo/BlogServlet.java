@@ -1,6 +1,7 @@
 package Demo;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -57,12 +58,25 @@ public class BlogServlet extends HttpServlet {
 		String username = (String) session.getAttribute("username");
 		if (title != "" || content != "") {
 			Message sentMessage = new Message(title, content, username);
+			sentMessage.setTitle();
 			sentMessage.setTime();
 			messageList.add(sentMessage);
-		}	
+		}
+		String[] checkBtn = new String[messageList.size()];
+		String[] deleteBtn = new String[messageList.size()];
+		for (int i = 0; i < messageList.size(); i++) {
+			checkBtn[i] = request.getParameter("checkBtn" + i);
+			deleteBtn[i] = request.getParameter("deleteBtn" + i);
+		}
+		for (int i = 0; i < messageList.size(); i++) {
+			if (checkBtn[i] != null) {
+				session.setAttribute("num", i);
+				response.sendRedirect("content.jsp");
+				return;
+			}
+		}
 		if (SendBtn != null) {
 //			session.setAttribute("SendBtn", new Boolean(true));
-			
 			response.sendRedirect("blog.jsp");
 		}
 	}

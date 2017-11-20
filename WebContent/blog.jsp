@@ -34,18 +34,21 @@
 		<td align="right"><input type="submit" name="SendBtn" value="发送 "/></td>
 	</tr>
 </table>
-<%
+<!--
 	ArrayList<Message> message = (ArrayList<Message>)application.getAttribute("messageList");
 	if (message != null) {
 		for (Message m:message){
 			out.print("<b>" + m.getUserName()+ "</b>\t<small>" + m.getTime() + "</small>");
 			out.print("<br/><pre>" + m.getTitle() + "</pre>");
-%>
-<input type="button" name="checkBtn" value="查看 " onclick = ""/>
-<input type="button" name="delteBtn" value="删除 " onclick = ""/>
+-->
 <%
-			out.print("</p>");
+	ArrayList<Message> messageList = (ArrayList<Message>)application.getAttribute("messageList");
+	if (messageList != null) {
+		int i = 0;
+		for (Message m:messageList) {
+			out.print(m.printMessage(m, i++));
 		}
+		out.print("<br/>");
 	} else {
 		return;
 	}
