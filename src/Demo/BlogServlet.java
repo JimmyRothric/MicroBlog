@@ -45,14 +45,20 @@ public class BlogServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		String SendBtn = request.getParameter("SendBtn");
 //		String LogoffBtn = request.getParameter("LogoffBtn");
+		ServletContext account = this.getServletContext();
+		AccountList accountList = (AccountList)account.getAttribute("accountList");//account
 		ServletContext pastMessage = this.getServletContext();
-		ArrayList<Message> messageList = (ArrayList<Message>)pastMessage.getAttribute("messageList");
+		ArrayList<Message> messageList = (ArrayList<Message>)pastMessage.getAttribute("messageList");//message
 		if (messageList == null) {
 			messageList = new ArrayList<Message>();
+		}
+		if (accountList == null) {
+			accountList = new AccountList();
 		}
 		pastMessage.setAttribute("messageList", messageList);
 		
 		HttpSession session = request.getSession();
+		
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		String username = (String) session.getAttribute("username");
@@ -61,6 +67,7 @@ public class BlogServlet extends HttpServlet {
 			sentMessage.setTitle();
 			sentMessage.setTime();
 			messageList.add(sentMessage);
+			accountList.searchAcc(username).addMessage(sentMessage);
 		}
 		String[] checkBtn = new String[messageList.size()];
 		String[] deleteBtn = new String[messageList.size()];
@@ -72,6 +79,14 @@ public class BlogServlet extends HttpServlet {
 			if (checkBtn[i] != null) {
 				session.setAttribute("num", i);
 				response.sendRedirect("content.jsp");
+				return;
+			}
+		}
+		for (int i = 0; i < messageList.size(); i++) {
+			if (deleteBtn[i] != null) {
+				messageList.remove(messageList.get(i));
+				accountList.searchAcc(username).delMessage(messageList.get(i));
+				response.sendRedirect("blog.jsp");
 				return;
 			}
 		}

@@ -1,18 +1,28 @@
 package Demo;
 
+import java.util.ArrayList;
+
 public class Account {
 	private String userName;
 	private String passWord;
-	private Message message;
+//	private Message message;
+	private ArrayList<Message> messageList;
 	public Account() {}
 	public Account(String name, String password) {
 		this.userName = name;
 		this.passWord = password;
+		messageList = new ArrayList<Message>();
 	}
-	public Account(String name, Message m) {
-		this.userName = name;
-		this.message = m;
-		this.message.setUserName(name);
+//	public Account(String name, Message m) {
+//		this.userName = name;
+//		m.setUserName(name);
+//		messageList.add(m);
+//	}
+	public void addMessage(Message m) {
+		messageList.add(m);
+	}
+	public void delMessage(Message m) {
+		messageList.remove(m);
 	}
 	public boolean verify (String username, String password) {
 		if (userName.equals(username) && passWord.equals(password)) {
@@ -22,6 +32,7 @@ public class Account {
 		}
 		
 	}
+
 	public String getUserName() {
 		return userName;
 	}

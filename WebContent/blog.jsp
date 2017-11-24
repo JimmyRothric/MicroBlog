@@ -19,8 +19,9 @@
 %>
 <form action="BlogServlet" method="post">
 
-<div style="float:right">${username}<br/>
-<input type="button" name="LogoffBtn" value="注销 " onclick = "this.form.action='login.jsp';this.form.submit()"/>
+<div style="float:right">
+<a href="homepage.jsp" target="_blank">${username}</a><br/>
+<input type="button" name="LogoffBtn" value="注销" onclick = "this.form.action='login.jsp';this.form.submit()"/>
 </div>
 
 <table>
@@ -42,11 +43,12 @@
 			out.print("<br/><pre>" + m.getTitle() + "</pre>");
 -->
 <%
+	String username = (String)session.getAttribute("username");
 	ArrayList<Message> messageList = (ArrayList<Message>)application.getAttribute("messageList");
 	if (messageList != null) {
 		int i = 0;
 		for (Message m:messageList) {
-			out.print(m.printMessage(m, i++));
+			out.print(m.printMessage(m, username, i++));
 		}
 		out.print("<br/>");
 	} else {

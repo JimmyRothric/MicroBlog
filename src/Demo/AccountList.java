@@ -11,7 +11,15 @@ public class AccountList {
 	public void addAcc(Account acc) {
 		accList.add(acc);
 	}
-	public boolean isverify(String name, String password) {
+	public Account searchAcc(String name) {
+		for (Account acc:accList) {
+			if (acc.getUserName().equals(name)){
+				return acc;
+			}
+		}
+		return null;
+	}
+	public boolean isVerify(String name, String password) {
 		for (Account acc:accList) {
 			if (acc.verify(name, password)){
 				return true;
@@ -19,7 +27,7 @@ public class AccountList {
 		}
 		return false;
 	}
-	public boolean isexist(String name) {
+	public boolean isExist(String name) {
 		for (Account acc:accList) {
 			if (acc.getUserName().equals(name)){
 				return true;

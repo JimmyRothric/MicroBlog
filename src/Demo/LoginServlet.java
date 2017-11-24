@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 		if (accountList != null) {
 //			for (Account acc:accountList) {
 //				if (acc.isverify(username, password)) {
-			if (accountList.isverify(username, password)) {
+			if (accountList.isVerify(username, password)) {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("loggedin", Boolean.TRUE);
 				session.setAttribute("username", username);

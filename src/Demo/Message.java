@@ -9,12 +9,21 @@ public class Message {
 	private String content;
 	private String userName;
 	private String time;
+	private String comment;
+	private int like;
 	
 	public Message(){}
 	public Message(String title, String content, String username) {
 		this.title = title;
 		this.content = content;
 		this.userName = username;
+	}
+	public boolean isAdmin(String name) {	//judge the user authority
+		if (name.equals("admin")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public String getMessage() {
 		StringBuffer message = new StringBuffer("");
@@ -23,17 +32,18 @@ public class Message {
 		message.append("<br/><pre>" + content + "</pre>");
 		return message.toString();
 	}
-	public String printMessage(Message m, int num) {
-		String checkStr = "checkBtn" + num;
-		String deleteStr = "deleteBtn" + num;
+	public String printMessage(Message m, String name, int i) {
 		StringBuffer message = new StringBuffer("");
+//		for (int i = 0; i < ) {
 		message.append("<b>" + m.getUserName()+ "</b>\t<small>" + m.getTime() + "</small>");
 		message.append("<br/><pre>" + m.getTitle() + "</pre>");
-		message.append("<input type=\"submit\" name=\"" + checkStr + "\" value=\"查看 \"/>");
-		if (m.getUserName().equals("admin")) {
-			message.append("<input type=\"submit\" name=\"" + deleteStr + "\" value=\"删除 \"/>");
+		message.append("<input type=\"submit\" name=\"checkBtn" + i + "\" value=\"查看 \"/>");
+		if (isAdmin(name) || m.getUserName().equals(name)) {
+			message.append("<input type=\"submit\" name=\"deleteBtn" + i + "\" value=\"删除 \"/>");
 		}
-		message.append("<br/>");		
+		message.append("</p>");		
+//		}
+		
 		return message.toString();
 	}
 	public String getTitle() {

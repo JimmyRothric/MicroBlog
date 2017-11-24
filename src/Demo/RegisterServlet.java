@@ -43,7 +43,6 @@ public class RegisterServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		ServletContext account = this.getServletContext();
-//		ArrayList<Account> accountList = (ArrayList<Account>)account.getAttribute("accountList");
 		AccountList accountList = (AccountList)account.getAttribute("accountList");
 		if (accountList == null) {
 			accountList = new AccountList();
@@ -54,7 +53,7 @@ public class RegisterServlet extends HttpServlet {
 		String password1 = request.getParameter("password1");
 //		for (Account acc:accountList) {
 //			if (acc.getUserName().equals(username)) {
-		if (accountList.isexist(username)) {
+		if (accountList.isExist(username)) {
 			request.setAttribute("registerError0", "This account has existed.");
 			RequestDispatcher rd = request.getRequestDispatcher("/register.jsp");
 			rd.forward(request, response);

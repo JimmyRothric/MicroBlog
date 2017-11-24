@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Content</title>
+<title>${username}</title>
 </head>
 <body>
 <%	if (session == null || session.getAttribute("loggedin") == null) {
@@ -20,18 +20,21 @@
 <div style="float:right">${username}<br/>
 <input type="button" name="backBtn" value="返回首页" onclick = "this.form.action='blog.jsp';this.form.submit()"/>
 </div>
-<%
-	Integer num = (Integer)session.getAttribute("num");
+<% 
+	String username = (String)session.getAttribute("username");
 	ArrayList<Message> messageList = (ArrayList<Message>)application.getAttribute("messageList");
 	if (messageList != null) {
-		int n = num.intValue();
-		out.print(messageList.get(n).getMessage());
+		int i = 0;
+		for (Message m:messageList) {
+			if (m.getUserName().equals(username)) {
+				out.print(m.printMessage(m, username, i++));
+			}
+		}
+		out.print("<br/>");
+	} else {
+		return;
 	}
+
 %>
-<form action="BlogServlet" method="post">
-
-<input type="submit" name="" value="评论">
-
-</form>
 </body>
 </html>
